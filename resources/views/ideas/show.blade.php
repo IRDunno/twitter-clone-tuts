@@ -1,6 +1,7 @@
 @extends("layout.layout")
 
 @section("content")
+@include('shared.success-message')
   <div class="row">
     <div class="col-3">
       @include("shared.left-sidebar")
