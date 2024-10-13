@@ -18,12 +18,12 @@ Route::post("/login", [AuthController::class, "authenticate"]);
 Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 
 Route::get("/ideas/{idea}", [IdeaController::class, "show"])->name("ideas.show");
-Route::post("/ideas", [IdeaController::class, "store"])->name("ideas.store");
-Route::get("/ideas/{idea}/edit", [IdeaController::class, "edit"])->name("ideas.edit");
-Route::put("/ideas/{idea}", [IdeaController::class, "update"])->name("ideas.update");
-Route::delete("/ideas/{idea}", [IdeaController::class, "destroy"])->name("ideas.destroy");
+Route::post("/ideas", [IdeaController::class, "store"])->name("ideas.store")->middleware("auth");
+Route::get("/ideas/{idea}/edit", [IdeaController::class, "edit"])->name("ideas.edit")->middleware("auth");
+Route::put("/ideas/{idea}", [IdeaController::class, "update"])->name("ideas.update")->middleware("auth");
+Route::delete("/ideas/{idea}", [IdeaController::class, "destroy"])->name("ideas.destroy")->middleware("auth");
 
-Route::post("/ideas/{idea}/comments", [CommentController::class, "store"])->name("ideas.comments.store");
+Route::post("/ideas/{idea}/comments", [CommentController::class, "store"])->name("ideas.comments.store")->middleware("auth");
 
 
 

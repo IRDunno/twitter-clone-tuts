@@ -3,21 +3,26 @@
     <div class="d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center">
         <img style="width:50px" class="me-2 avatar-sm rounded-circle"
-          src="https://api.dicebear.com/6.x/fun-emoji/svg?seed=Mario" alt="Mario Avatar">
+          src="https://api.dicebear.com/6.x/fun-emoji/svg?seed={{ $idea->user->name }}" alt="{{ $idea->user->name }} ">
         <div>
-          <h5 class="card-title mb-0"><a href="#"> Mario
-            </a></h5>
+          <h5 class="card-title mb-0">
+            <a href="#"> {{ $idea->user->name }} </a>
+          </h5>
         </div>
       </div>
       <form action="{{ route("ideas.destroy", $idea->id) }}" method="post">
         @method("delete")
         @csrf
-        @if ($editing ?? false)
+        @if ($editPage ?? false || Route::currentRouteName() === "/")
           <a href="{{ route("ideas.show", $idea->id) }}">View</a>
         @else
-          <a href="{{ route("ideas.edit", $idea->id) }}">Edit</a>
+          @if (Auth::id() === $idea->user_id)
+            <a href="{{ route("ideas.edit", $idea->id) }}">Edit</a>
+          @endif
         @endif
-        <button class="ml-1 btn btn-danger btn-sm">X</button>
+        @if (Auth::id() === $idea->user_id)
+          <button class="ml-1 btn btn-danger btn-sm">X</button>
+        @endif
       </form>
     </div>
   </div>
@@ -50,7 +55,7 @@
             {{ $idea->created_at }} </span>
         </div>
       </div>
-      @include('shared.comments-box')
+      @include("shared.comments-box")
     @endif
   </div>
 </div>
