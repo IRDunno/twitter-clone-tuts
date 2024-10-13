@@ -13,7 +13,7 @@
       <form action="{{ route("ideas.destroy", $idea->id) }}" method="post">
         @method("delete")
         @csrf
-        @if ($editPage ?? false || Route::currentRouteName() === "/")
+        @if ($editPage ?? false || Request::is('/'))
           <a href="{{ route("ideas.show", $idea->id) }}">View</a>
         @else
           @if (Auth::id() === $idea->user_id)
@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="card-body">
-    @if ($editing ?? false)
+    @if ($editPage ?? false)
       <form action="{{ route("ideas.update", $idea->id) }}" method="post">
         @csrf
         @method("put")
