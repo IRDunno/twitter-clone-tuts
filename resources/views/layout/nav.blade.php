@@ -7,7 +7,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav align-items-center">
         @guest
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/login">Login</a>
@@ -18,7 +18,7 @@
         @endguest
         @auth
           <li class="nav-item">
-            <a class="nav-link" href="/profile">{{ Auth::user()->name }}</a>
+            <a class="nav-link" href="{{ route("users.show", Auth::id()) }}">{{ Auth::user()->name }}</a>
           </li>
           <li class="nav-item">
             <form action="{{ route("logout") }}" method="post">
