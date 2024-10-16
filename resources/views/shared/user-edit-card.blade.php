@@ -33,13 +33,6 @@
           <span class="text-danger fs-6">{{ $message }}</span>
         @enderror
         <button type="submit" class="btn btn-dark btn-small my-3 d-block">Save</button>
-        @auth
-          @if (Auth::id() !== $user->id)
-            <div class="mt-3">
-              <button class="btn btn-primary btn-sm"> Follow </button>
-            </div>
-          @endif
-        @endauth
       </div>
     </form>
   </div>
