@@ -13,7 +13,7 @@
       <form action="{{ route("ideas.destroy", $idea->id) }}" method="post">
         @method("delete")
         @csrf
-        @if ($editPage ?? false || Request::is('/'))
+        @if ($editPage ?? false || Request::is("/"))
           <a href="{{ route("ideas.show", $idea->id) }}">View</a>
         @else
           @if (Auth::id() === $idea->user_id)
@@ -46,10 +46,7 @@
         {{ $idea->content }}
       </p>
       <div class="d-flex justify-content-between">
-        <div>
-          <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-heart me-1">
-            </span> {{ $idea->likes }} </a>
-        </div>
+        @include('ideas.shared.like-button')
         <div>
           <span class="fs-6 fw-light text-muted"> <span class="fas fa-clock"> </span>
             {{ $idea->created_at }} </span>

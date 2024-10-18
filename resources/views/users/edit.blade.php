@@ -7,7 +7,7 @@
     </div>
     <div class="col-6">
       @include("shared.success-message")
-      @include("shared.user-edit-card")
+      @include("users.shared.user-edit-card")
     </div>
     <div class="col-3">
       @include("shared.search-bar")
