@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Idea extends Model {
   use HasFactory;
 
+  protected $with = ["user:id,name,image", "comments.user:id,name,image"];
+
   protected $guarded = [
     "id",
     "created_at",
