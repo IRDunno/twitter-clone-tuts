@@ -11,14 +11,11 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-// The name() function references the url (/url) ONLY, the method (POST, GET, etc) is not referenced
-// So if you two with the same url, the name will depend on the method you send, the default being GET
-
 Route::get("/", [DashboardController::class, "index"])->name("dashboard");
 
-Route::resource("ideas", IdeaController::class)->except(["index", "create", "show"])->middleware("auth"); // create everything except those referenced, and add auth to them
+Route::resource("ideas", IdeaController::class)->except(["index", "create", "show"])->middleware("auth"); 
 
-Route::resource("ideas", IdeaController::class)->only(["show"]); // only create show without auth
+Route::resource("ideas", IdeaController::class)->only(["show"]); 
 
 Route::resource("ideas.comments", CommentController::class)->only(["store"])->middleware("auth");
 
@@ -35,4 +32,4 @@ Route::post("ideas/{idea}/unlike", [IdeaLikeController::class, "unlike"])->middl
 
 Route::get("/feed", FeedController::class)->middleware("auth")->name("feed");
 
-Route::get("/admin", [AdminDashboardController::class, "index"])->middleware(["auth", "admin"])->name("admin.dashboard");
+Route::get("/admin", [AdminDashboardController::class, "index"])->middleware(["auth", "can:admin"])->name("admin.dashboard");

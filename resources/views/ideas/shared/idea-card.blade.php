@@ -10,20 +10,20 @@
           </h5>
         </div>
       </div>
-      <form action="{{ route("ideas.destroy", $idea->id) }}" method="post">
-        @method("delete")
-        @csrf
-        @if ($editPage ?? false || Request::is("/"))
-          <a href="{{ route("ideas.show", $idea->id) }}">View</a>
-        @else
-          @if (Auth::id() === $idea->user_id)
-            <a href="{{ route("ideas.edit", $idea->id) }}">Edit</a>
-          @endif
-        @endif
+      @if ($editPage ?? false || Request::is("/"))
+        <a href="{{ route("ideas.show", $idea->id) }}">View</a>
+      @else
         @if (Auth::id() === $idea->user_id)
-          <button class="ml-1 btn btn-danger btn-sm">X</button>
+          <a href="{{ route("ideas.edit", $idea->id) }}">Edit</a>
         @endif
-      </form>
+      @endif
+      @if (Auth::id() === $idea->user_id)
+        <form action="{{ route("ideas.destroy", $idea->id) }}" method="post">
+          @method("delete")
+          @csrf
+          <button class="ml-1 btn btn-danger btn-sm">X</button>
+        </form>
+      @endif
     </div>
   </div>
   <div class="card-body">
@@ -46,7 +46,7 @@
         {{ $idea->content }}
       </p>
       <div class="d-flex justify-content-between">
-        @include('ideas.shared.like-button')
+        @include("ideas.shared.like-button")
         <div>
           <span class="fs-6 fw-light text-muted"> <span class="fas fa-clock"> </span>
             {{ $idea->created_at->diffForHumans() }} </span>
