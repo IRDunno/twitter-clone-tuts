@@ -6,6 +6,11 @@
           href="{{ route("dashboard") }}">
           <span>Home</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link {{ Route::is("feed") ? "text-white bg-primary rounded-pill" : "" }}"
+          href="{{ route("feed") }}">
+          <span>Feed</span></a>
+      </li>
     </ul>
   </div>
   <div class="card-footer text-center py-2">

@@ -10,13 +10,19 @@
       <ul class="navbar-nav align-items-center">
         @guest
           <li class="nav-item">
-            <a class="nav-link {{ Route::is("login") ? "active" : "" }}" aria-current="page" href="{{ route("login") }}">Login</a>
+            <a class="nav-link {{ Route::is("login") ? "active" : "" }}" aria-current="page"
+              href="{{ route("login") }}">Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{ Route::is("register") ? "active" : "" }}" href="{{ route("register") }}">Register</a>
           </li>
         @endguest
         @auth
+          @if (Auth::user()->is_admin)
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route("admin.dashboard") }}">Admin</a>
+            </li>
+          @endif
           <li class="nav-item">
             <a class="nav-link" href="{{ route("profile") }}">{{ Auth::user()->name }}</a>
           </li>
