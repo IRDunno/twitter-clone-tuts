@@ -3,8 +3,9 @@
     <h5 class="">Search</h5>
   </div>
   <div class="card-body">
-    <form action="{{ route("dashboard") }}" method="get">
-      <input value="{{ request("search", "") }}" placeholder="..." class="form-control w-100" type="text" name="search" id="search">
+    <form action="{{ Route::is("dashboard") ? route("dashboard") : route("feed") }}" method="get">
+      <input value="{{ request("search", "") }}" placeholder="..." class="form-control w-100" type="text" name="search"
+        id="search">
       <button type="submit" class="btn btn-dark mt-2"> Search</button>
     </form>
   </div>
