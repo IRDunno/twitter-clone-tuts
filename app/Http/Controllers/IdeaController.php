@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateIdeaRequest;
+use App\Http\Requests\UpdateIdeaRequest;
 use App\Models\Idea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +15,8 @@ class IdeaController extends Controller {
     return view("ideas.show", compact("idea"));
   }
 
-  public function store() {
-    $validated = request()->validate([
-      "content" => "required|min:3|max:240"
-    ]);
+  public function store(CreateIdeaRequest $request) {
+    $validated = $request->validated();
 
     $validated["user_id"] = Auth::id();
 
@@ -40,12 +40,10 @@ class IdeaController extends Controller {
     return view("ideas.show", compact("idea", "editPage"));
   }
 
-  public function update(Idea $idea) {
+  public function update(UpdateIdeaRequest $request, Idea $idea) {
     Gate::authorize("update", $idea);
 
-    $validated = request()->validate([
-      "content" => "required|min:3|max:240"
-    ]);
+    $validated = $request->validated();
 
     $idea->update($validated);
 
