@@ -26,9 +26,7 @@ class IdeaController extends Controller {
   }
 
   public function destroy(Idea $idea) {
-    if (!Gate::allows("idea.delete", $idea)) {
-      abort(403);
-    }
+    Gate::authorize("delete", $idea);
 
     $idea->delete();
 
@@ -36,18 +34,14 @@ class IdeaController extends Controller {
   }
 
   public function edit(Idea $idea) {
-    if (!Gate::allows("idea.edit", $idea)) {
-      abort(403);
-    }
+    Gate::authorize("update", $idea);
 
     $editPage = true;
     return view("ideas.show", compact("idea", "editPage"));
   }
 
   public function update(Idea $idea) {
-    if (!Gate::allows("idea.edit", $idea)) {
-      abort(403);
-    }
+    Gate::authorize("update", $idea);
 
     $validated = request()->validate([
       "content" => "required|min:3|max:240"
