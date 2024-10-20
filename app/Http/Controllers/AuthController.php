@@ -17,11 +17,7 @@ class AuthController extends Controller {
       "password" => "required|confirmed",
     ]);
 
-    $user = User::create([
-      "name" => $validated["name"],
-      "email" => $validated["email"],
-      "password" => Hash::make($validated["password"])
-    ]);
+    $user = User::create($validated);
 
     // Mail::to($user->email)->send(new WelcomeEmail($user));
 

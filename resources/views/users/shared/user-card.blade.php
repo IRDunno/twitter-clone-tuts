@@ -11,17 +11,15 @@
         </h3>
         <span class="fs-6 text-muted">@ {{ $user->email }}</span>
       </div>
-      @auth
-        @if (Auth::id() === $user->id)
-          <div>
-            @if ($editPage ?? false)
-              <a href="{{ route("users.show", $user->id) }}">View</a>
-            @else
-              <a href="{{ route("users.edit", $user->id) }}">Edit</a>
-            @endif
-          </div>
-        @endif
-      @endauth
+      @can("update", $user)
+        <div>
+          @if ($editPage ?? false)
+            <a href="{{ route("users.show", $user->id) }}">View</a>
+          @else
+            <a href="{{ route("users.edit", $user->id) }}">Edit</a>
+          @endif
+        </div>
+      @endcan
     </div>
     <div class="px-2 mt-4">
       <h5 class="fs-5"> Bio : </h5>
@@ -31,9 +29,9 @@
         @endif
         {{ $user->bio }}
       </p>
-      @include('users.shared.user-stats')
+      @include("users.shared.user-stats")
       @auth
-        @if (Auth::id() !== $user->id)
+        @if (Auth::user()->isNot($user))
           <div class="mt-3">
             @if (Auth::user()->follows($user))
               <form method="post" action="{{ route("users.unfollow", $user->id) }}">

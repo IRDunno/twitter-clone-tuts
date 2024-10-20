@@ -12,13 +12,13 @@ class IdeaPolicy {
    * Determine whether the user can update the model.
    */
   public function update(User $user, Idea $idea): bool {
-    return ($user->is_admin || $user->id === $idea->user_id);
+    return ($user->is_admin || $user->is($idea->user));
   }
 
   /**
    * Determine whether the user can delete the model.
    */
-  public function delete(User $user, Idea $idea): Response {
-    return ($user->is_admin || $user->id === $idea->user_id) ? Response::allow() : Response::deny("You do not own this post");
+  public function delete(User $user, Idea $idea): bool {
+    return ($user->is_admin || $user->is($idea->user));
   }
 }
