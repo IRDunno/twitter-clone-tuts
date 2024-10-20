@@ -1,5 +1,7 @@
 @extends("layout.layout")
 
+@section("title", "View Idea")
+
 @section("content")
 @include('shared.success-message')
   <div class="row">
