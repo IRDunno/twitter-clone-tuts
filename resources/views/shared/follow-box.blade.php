@@ -15,10 +15,25 @@
           <a class="h6 mb-0" href="{{ route("users.show", $user) }}">{{ $user->name }}</a>
           <p class="mb-0 small text-truncate">{{ $user->email }}</p>
         </div>
-        <a class="btn btn-primary-soft rounded-circle icon-md ms-auto" href="#">
-          <i class="fa-solid fa-plus">
-          </i>
-        </a>
+        @auth
+          @if (!Auth::user()->follows($user) && Auth::user()->isNot($user))
+            <form action="{{ route("users.follow", $user->id) }}" method="post" class="ms-auto">
+              @csrf
+              <button class="btn btn-primary-soft rounded-circle icon-md" title="follow">
+                <i class="fa-solid fa-plus">
+                </i>
+              </button>
+            </form>
+          @else
+            <form action="{{ route("users.unfollow", $user->id) }}" method="post" class="ms-auto">
+              @csrf
+              <button class="btn btn-primary-soft rounded-circle icon-md" title="unfollow">
+                <i class="fa-solid fa-minus">
+                </i>
+              </button>
+            </form>
+          @endif
+        @endauth
       </div>
     @endforeach
   </div>

@@ -28,6 +28,12 @@ class AppServiceProvider extends ServiceProvider {
       return (bool) $user->is_admin;
     });
 
-    View::share("topUsers", User::withCount("ideas")->orderBy("created_at", "DESC")->limit(5)->get());
+    View::share(
+      "topUsers",
+      User::withCount("ideas")
+        ->orderBy("ideas_count", "DESC")
+        ->limit(5)
+        ->get()
+    );
   }
 }
